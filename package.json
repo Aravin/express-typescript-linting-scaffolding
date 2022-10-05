@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/Aravin/express-typescript-linting-scaffolding#readme",
   "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.39.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.1"
