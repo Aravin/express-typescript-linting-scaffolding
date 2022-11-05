@@ -1,4 +1,5 @@
 import winston from 'winston';
+import WinstonCloudWatch from 'winston-cloudwatch';
 
 const appName = 'APPNAME';
 
@@ -10,8 +11,8 @@ const logger = winston.createLogger({
     // - Write all logs with importance level of `error` or less to `error.log`
     // - Write all logs with importance level of `info` or less to `combined.log`
     //
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' }),
+    // new winston.transports.File({ filename: 'error.log', level: 'error' }),
+    // new winston.transports.File({ filename: 'combined.log' }),
   ],
 });
 
@@ -25,8 +26,14 @@ if (process.env.NODE_ENV !== 'production') {
     format: winston.format.combine(
       winston.format.colorize(),
       winston.format.timestamp(),
-      winston.format.printf(info => `${appName} ${info.timestamp} ${info.level}: ${info.message}`), )
+      winston.format.printf(info => `${appName} ${info.timestamp} ${info.level}: ${info.message}`),)
   }));
+} else {
+  logger.add(new WinstonCloudWatch({
+    logGroupName: appName,
+    logStreamName: 'default'
+  })
+  );
 }
 
 export const log = logger;
