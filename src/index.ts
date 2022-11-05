@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { router } from './routes';
 import { appConfig } from './config';
+import { log } from './utils/logger';
 
 const app = express();
 
@@ -14,5 +15,5 @@ app
 // start the server
 app.listen(
     appConfig.port,
-    () => console.log(`API is running on PORT ${appConfig.port}`),
+    () => log.error(`API is running on PORT ${appConfig.port}`)
 );
